@@ -123,7 +123,7 @@ class Main extends CI_Controller {
 			$this->email->message($message);
 			if($this->email->send()){
 				echo "Your password reset link send to your e-mail address.";
-				echo "<p><a href='".base_url()."main/reset_password/$encrypt' >Click here</a> to reset your password</p>";
+				//echo "<p><a href='".base_url()."main/reset_password/$encrypt' >Click here</a> to reset your password</p>";
 			} else {
 				echo "Could not send the email!";
 			}
@@ -164,7 +164,8 @@ class Main extends CI_Controller {
 			if($this->model_users->add_temp_users($key)){
 			    if($this->email->send()){
 					$this->model_users->user_audit_log("REGISTRATION",$this->input->post('email'),date("Y-m-d H:i:s",time()));
-				    echo "<p><a href='".base_url()."main/register_user/$key' >Click here</a> to confirm your account</p>";
+					echo "Your account activation link has been sent to your e-mail address.";
+				    //echo "<p><a href='".base_url()."main/register_user/$key' >Click here</a> to confirm your account</p>";
 			    } else {
 				    echo "Could not send the email!";
 			    }

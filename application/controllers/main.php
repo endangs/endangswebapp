@@ -7,6 +7,20 @@ class Main extends CI_Controller {
 		$this->frontpage();
 	}
 	
+	public function testemail(){
+		$this->load->library('email',array('mailtype'=>'html'));
+		$this->email->from('dunkz_nawawy@yahoo.com',"Endang Saepudin");
+		$this->email->to("endang_saepudin@pratesis.com");
+		$this->email->subject("Forget Password");
+		$message = "<p>Hi Endang, </p>";
+		$this->email->message($message);
+		if($this->email->send()){
+			echo "Your password reset link send to your e-mail address.";
+		} else {
+			echo "Could not send the email!";
+		}
+	}
+	
 	public function frontpage(){
 		$this->load->model('model_articles');
 		$this->load->library("pagination");		
@@ -115,7 +129,7 @@ class Main extends CI_Controller {
 			$name = $this->model_users->get_user_name($email);
 			$encrypt = md5($email);
 			$this->load->library('email',array('mailtype'=>'html'));
-			$this->email->from('dunkznawawy@gmail.com',"Endang Saepudin");
+			$this->email->from('dunkz_nawawy@yahoo.com',"Endang Saepudin");
 			$this->email->to($email);
 			$this->email->subject("Forget Password");
 			$message = "<p>Hi $name, </p";
@@ -155,7 +169,7 @@ class Main extends CI_Controller {
 			$key = md5(uniqid());
 			$this->load->model('model_users');
 			$this->load->library('email',array('mailtype'=>'html'));
-			$this->email->from('dunkznawawy@gmail.com',"Endang Saepudin");
+			$this->email->from('dunkz_nawawy@yahoo.com',"Endang Saepudin");
 			$this->email->to($this->input->post('email'));
 			$this->email->subject("Confirm your account.");
 			$message = "<p>Thank you for signing up!</p>";

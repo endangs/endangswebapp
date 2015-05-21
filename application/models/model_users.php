@@ -104,7 +104,14 @@ class Model_users extends CI_Model{
 	}
 	
 	public function get_active_users(){
-		return $this->db->get('active_users')->result();
+		return $this->db->order_by("log_count","DESC")->get('view_active_users')->result();
+	}
+	
+	public function get_registered_users($start_date,$end_date){
+		$this->db->order_by("date","ASC");
+		$this->db->where('date >=',$start_date);
+		$this->db->where('date <=',$end_date);
+		return $this->db->get('view_registered_users')->result();
 	}
 	
 	public function get_user_role($email){

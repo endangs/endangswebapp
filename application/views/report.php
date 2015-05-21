@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Members Page</title>
     <link href="<?php echo base_url(); ?>resources/css/bootstrap.min.css" rel="stylesheet">
+	<link href="<?php echo base_url(); ?>resources/css/jquery-ui.min.css" rel="stylesheet">
   </head>
   <body>
 <div class="container">
@@ -22,16 +23,32 @@
 	<p><br/></p>
 	<div class="row">
 		<div class="col-xs-12 col-md-10">
-			<h2>Registered Users Report</h2>
-			<p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>
-			<p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec ullamcorper nulla non metus auctor fringilla. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec ullamcorper nulla non metus auctor fringilla.</p>
-			<p>Maecenas sed diam eget risus varius blandit sit amet non magna. Donec id elit non mi porta gravida at eget metus. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.</p>
-			<small><span class="glyphicon glyphicon-bookmark"> Category: Template</span></small>
-			<h2>Active Users Report</h2>
-			<p>Nullam quis risus eget urna mollis ornare vel eu leo. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nullam id dolor id nibh ultricies vehicula.</p>
-			<p>Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec ullamcorper nulla non metus auctor fringilla. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit. Donec ullamcorper nulla non metus auctor fringilla.</p>
-			<p>Maecenas sed diam eget risus varius blandit sit amet non magna. Donec id elit non mi porta gravida at eget metus. Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia odio sem nec elit.</p>
-			<small><span class="glyphicon glyphicon-bookmark"> Category: Template</span></small>
+			<div class="panel-heading">
+				<h2>Registered Users Report</h2>
+			</div>
+			<div class="panel-body">
+				<?php echo form_open('excelreport/registered_users',array("data-toggle"=>"validator","role"=>"form")); ?>
+					<div class="form-group">
+						<label for="startdate">Start Date</label>							
+						<input type="text" class="form-control" name="startdate" id="startdate" data-error="Start Date is required"  placeholder="Start Date" required>
+						<div class="help-block with-errors"></div>
+					</div>
+					<div class="form-group">
+						<label for="enddate">End Date</label>							
+						<input type="text" class="form-control" name="enddate" id="enddate" data-error="End Date is required"  placeholder="End Date" required>
+						<div class="help-block with-errors"></div>
+					</div>
+					<button type="submit" class="btn btn-primary">Show Report</button>
+				</form>
+			</div>
+			<div class="panel-heading">
+				<h2>Active Users Report</h2>
+			</div>
+			<div class="panel-body">
+				<?php echo form_open('excelreport/active_users',array("data-toggle"=>"validator","role"=>"form")); ?>
+					<button type="submit" class="btn btn-primary">Show Report</button>
+				</form>
+			</div>
 		</div>
 	</div>
 	<footer>
@@ -42,7 +59,28 @@
 	</footer>
 </div>
     <script src="<?php echo base_url(); ?>resources/js/jquery-1.11.3.min.js"></script>
+	<script src="<?php echo base_url(); ?>resources/js/jquery-ui.min.js"></script>
     <script src="<?php echo base_url(); ?>resources/js/bootstrap.min.js"></script>
 	<script src="<?php echo base_url(); ?>resources/js/validator.min.js"></script>
+	<script>
+		$(function(){
+			$("#startdate").datepicker({
+				changeMonth: true,
+				changeYear: true,
+				dateFormat: "yy-mm-dd",
+				onClose: function( selectedDate ) {
+					$( "#enddate" ).datepicker( "option", "minDate", selectedDate );
+				}
+			});
+			$("#enddate").datepicker({
+				changeMonth: true,
+				changeYear: true,
+				dateFormat: "yy-mm-dd",
+				onClose: function( selectedDate ) {
+					$( "#startdate" ).datepicker( "option", "maxDate", selectedDate );
+				}
+			});
+		});
+	</script>
   </body>
 </html>
